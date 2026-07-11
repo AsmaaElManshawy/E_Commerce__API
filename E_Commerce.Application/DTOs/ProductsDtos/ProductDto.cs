@@ -10,11 +10,11 @@ namespace E_Commerce.Application.DTOs.ProductsDtos
     {
         // Id, Name, Description, PictureUrl, Price, ProductBrand, ProductType
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string PictureUrl { get; set; }
-        public string ProductBrand { get; set; }
-        public string ProductType { get; set; }
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
+        public string PictureUrl { get; set; } = default!;
+        public string ProductBrand { get; set; } = default!;
+        public string ProductType { get; set; } = default!;
         public decimal Price { get; set; }
     }
 }

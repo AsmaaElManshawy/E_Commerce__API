@@ -2,6 +2,7 @@
 using E_Commerce.Application.Common;
 using E_Commerce.Application.Contracts;
 using E_Commerce.Application.DTOs.ProductsDtos;
+using E_Commerce.Application.Specification;
 using E_Commerce.Domain.Contracts;
 using E_Commerce.Domain.Entities.Products;
 using System;
@@ -28,10 +29,15 @@ namespace E_Commerce.Application.Services
             var brands = await _unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync(ct);
             return Result<IReadOnlyList<BrandDto>>.Ok(_mapper.Map<IReadOnlyList<BrandDto>>(brands));
         }
-        public async Task<Result<IReadOnlyList<ProductDto>>> GetAllProductsAsync(CancellationToken ct = default)
+        public async Task<Result<PaginatedResult<ProductDto>>> GetAllProductsAsync(ProuductQueryParams queryParams, CancellationToken ct = default)
         {
-            var products = await _unitOfWork.GetRepository<Product, int>().GetAllAsync(ct);
-            return Result<IReadOnlyList<ProductDto>>.Ok(_mapper.Map<IReadOnlyList<ProductDto>>(products));
+            var Spec = new ProductwithBrandAndTypeSpec(queryParams);
+            var products = await _unitOfWork.GetRepository<Product, int>().GetAllAsync(Spec, ct);
+            var data = _mapper.Map<IReadOnlyList<ProductDto>>(products);
+            var CountSpec = new ProductCountSpecification(queryParams);
+            var CountofProducts = await _unitOfWork.GetRepository<Product, int>().CountAsync(CountSpec);
+            var result = new PaginatedResult<ProductDto>(queryParams.PageIndex, queryParams.pageSize, CountofProducts, data);
+            return Result<PaginatedResult<ProductDto>>.Ok(result);
         }
         public async Task<Result<IReadOnlyList<TypeDto>>> GetAllTypesAsync(CancellationToken ct = default)
         {
@@ -40,13 +46,12 @@ namespace E_Commerce.Application.Services
         }
         public async Task<Result<ProductDto>> GetProductByIdAsync(int id, CancellationToken ct = default)
         {
-            var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(id, ct);
+            var Spec = new ProductwithBrandAndTypeSpec(id);
+            var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(Spec, ct);
             if (product is not null)
                 return Result<ProductDto>.Ok(_mapper.Map<ProductDto>(product));
             return Result<ProductDto>.Fail(Error.NotFound("Product.NotFound", $"Product With Id {id} Not Found !"));
         }
-    
-    
-    
+
     }
 }
