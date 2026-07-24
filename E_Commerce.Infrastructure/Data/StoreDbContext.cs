@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Entities.Products;
+﻿using E_Commerce.Domain.Entities.Orders;
+using E_Commerce.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace E_Commerce.Infrastructure.Data
         public DbSet<Product> Products { get; set; } = default!;
         public DbSet<ProductBrand> ProductBrands { get; set; } = default!;
         public DbSet<ProductType> ProductTypes { get; set; } = default!;
+        public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; } = default!;
         #endregion
 
         #region Configurations 

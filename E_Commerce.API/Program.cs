@@ -1,6 +1,8 @@
 using E_Commerce.API;
 using E_Commerce.Application;
+using E_Commerce.Application.Profiles;
 using E_Commerce.Infrastructure;
+using E_Commerce.Infrastructure.Identity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,9 @@ builder.Services.AddControllers(); // Project APIs
 builder.Services.AddInfrastructureService(builder.Configuration); // Infrastructure Layer
 
 builder.Services.AddApplicationService(); // Application Layer
+
+builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("UrlSettings"));
+builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWT"));
 
 #endregion
 
@@ -38,6 +43,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
