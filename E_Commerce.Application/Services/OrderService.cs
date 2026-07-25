@@ -43,7 +43,8 @@ namespace E_Commerce.Application.Services
             
             foreach (var item in basket.Items)
             {
-                if (products.TryGetValue( item.Id , out var product ))
+                
+                if (!products.TryGetValue( item.Id , out var product ))
                     return Result<OrderToReturnDto>.Fail(Error.NotFound("Not Found", $"Product With This Id = {item.Id} Not Found"));
 
                 // add to  orderItems list

@@ -1,5 +1,6 @@
 using E_Commerce.API;
 using E_Commerce.Application;
+using E_Commerce.Application.Common;
 using E_Commerce.Application.Profiles;
 using E_Commerce.Infrastructure;
 using E_Commerce.Infrastructure.Identity.Services;
@@ -18,6 +19,7 @@ builder.Services.AddApplicationService(); // Application Layer
 
 builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("UrlSettings"));
 builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWT"));
+builder.Services.Configure<PaymentGatewaySettings>(builder.Configuration.GetSection("Stripe"));
 
 #endregion
 

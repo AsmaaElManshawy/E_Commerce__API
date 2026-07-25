@@ -5,6 +5,7 @@ using E_Commerce.Infrastructure.Data.DataSeeding;
 using E_Commerce.Infrastructure.Identity.Data;
 using E_Commerce.Infrastructure.Identity.Entities;
 using E_Commerce.Infrastructure.Identity.Services;
+using E_Commerce.Infrastructure.Payments;
 using E_Commerce.Infrastructure.Repositories;
 using E_Commerce.Infrastructure.SeedingData;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -52,6 +53,7 @@ namespace E_Commerce.Infrastructure
 
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPaymentGateway, StripePaymentGateway>();
 
             var jwtSetting = configuration.GetSection("JWT").Get<JWTSettings>()
                 ?? throw new InvalidOperationException("JWT Settings is Empty !");

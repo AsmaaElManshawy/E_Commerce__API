@@ -44,16 +44,17 @@ namespace E_Commerce.Infrastructure.SeedingData
 
                 // Error
                 // dose not seed user always : Can not Assign Role To User
+                // Password should at least have one A-Z 
                 if (!await _userManager.Users.AnyAsync())
                 {
                     var admin = new ApplicationUser
                     {
                         DisplayName = "AsmaaSayed",
                         Email = "asmaa@gmail.com",
-                        UserName = "Asmaa Sayed",
+                        UserName = "Asmaa",
                         PhoneNumber = "01125478963"
                     };
-                    var createResult = await _userManager.CreateAsync(admin, "p@ssw0rd");
+                    var createResult = await _userManager.CreateAsync(admin, "P@ssw0rd");
 
                     if (createResult.Succeeded)
                         await _userManager.AddToRoleAsync(admin, "SuperAdmin");
