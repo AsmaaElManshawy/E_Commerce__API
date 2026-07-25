@@ -4,3 +4,19 @@ GET {{E_Commerce.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+### all error ??????????????????
+### Get all Products
+GET {{E_Commerce.API_HostAddress}}/api/Products
+Accept: application/json
+
+### Get Product by id
+GET https://localhost:7222/api/Products/2
+Accept: application/json
+
+### Get brands
+GET {{E_Commerce.API_HostAddress}}/api/Products/brands
+Accept: application/json
+
+### Get types
+GET {{E_Commerce.API_HostAddress}}/api/Products/types
+Accept: application/json

@@ -1,0 +1,26 @@
+﻿using E_Commerce.Application.Contracts;
+using E_Commerce.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace E_Commerce.Application
+{
+    public static class ApplicationServiceRegister
+    {
+        public static IServiceCollection AddApplicationService(this IServiceCollection services)
+        {
+            services.AddAutoMapper( c=> { }, typeof(ApplicationServiceRegister).Assembly);
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBasketService, BasketService>(); 
+            services.AddScoped<ICacheService, CacheService>();  
+            services.AddScoped<IAuthenticationService, AuthenticationService>();  
+            services.AddScoped<IOrderService, OrderService>();  
+            services.AddScoped<IPaymentService, PaymentService>();  
+            return services;
+        }
+    }
+}
